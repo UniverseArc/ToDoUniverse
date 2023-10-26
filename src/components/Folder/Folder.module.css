@@ -1,0 +1,19 @@
+.folderBorder{
+    background-color: #F4F6F8;
+    color: #000;
+    list-style-type: none;
+    min-width: 200px;
+    min-height: 100vh;
+}
+.arrayBorder{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 0 20px;
+}
+.addFolderButton{
+    background-color: transparent;
+    color: #767676;
+    border: none;
+    cursor: pointer;
+}

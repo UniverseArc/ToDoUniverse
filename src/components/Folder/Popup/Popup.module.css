@@ -1,0 +1,69 @@
+.popupWrapper{
+    position: fixed;
+    margin-top: 13px;
+    margin-left: 28px;
+}
+
+.popupWrapperOnOpen{
+    transition: all 0.5s ease-in-out;
+}
+.popupWrapperOnClose{
+    transition: all 0.5s ease-in-out;
+    transform: translateX(-300px);
+}
+
+.popupContent{
+    border-radius: 20px;
+    background-color: white;
+    width: 235px;
+    height: 148px;
+}
+.popupInput{
+    margin-top: 18px;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid #EFEFEF;
+    background: #FFF;
+    text-align: left;
+    padding-left: 11px;
+}
+.popupColorsPick{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-left: 20px;
+    margin-top: 13px;
+    cursor: pointer;
+}
+
+.popupColorsPick div {
+    width: 15.7px;
+    height: 15.7px;
+    border-radius: 50px;
+}
+.popupColorsPick div:hover {
+    border: 1px black solid;
+}
+.popupColorsPick div:target {
+    border: 1px black solid;
+}
+
+.popupButton{
+    margin-top: 13px;
+    width: 200px;
+    height: 37px;
+    background-color: #4DD599;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.popupCloseSvg{
+    position: absolute;
+    left: 220px;
+    top: -10px;
+    cursor: pointer;
+}
+
+.popupColorsPick_Border{
+    border: 1px transparent solid;
+}
