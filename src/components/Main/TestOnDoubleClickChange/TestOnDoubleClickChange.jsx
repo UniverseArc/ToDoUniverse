@@ -6,7 +6,7 @@ class TestOnDoubleClickChange extends React.Component {
         editMode: false,
         value: this.props.tasks.value,
     }
-    activeEditMode = () => { // Правильнее писать так
+    activeEditMode = () => {
         this.setState({
             editMode: true
         })
@@ -15,7 +15,7 @@ class TestOnDoubleClickChange extends React.Component {
         this.setState({
             editMode: false
         })
-        this.props.handleChangeValueOfTask(this.props.tasks.id, this.props.tasks, this.state.value) // Отправить новое имя таски
+        this.props.handleChangeValueOfTask(this.props.tasks.id, this.props.tasks, this.state.value)
     }
     onChangeUpdateValue= (e) => {
         this.setState({

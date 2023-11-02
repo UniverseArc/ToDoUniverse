@@ -90,7 +90,6 @@ export const addTaskThunkCreator = (folderId, value, checked) => {
     
     return (dispatch) => {
         taskAPI.createTaskInFolder({folderId, value, checked}).then(data => {
-            //TO-DO: createTaskInFolder возможно нуждается в доснабжении параметрами в API.
             dispatch(addTaskAC(data))
         })
     }

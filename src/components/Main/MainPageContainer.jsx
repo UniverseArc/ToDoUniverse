@@ -87,9 +87,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-// const ConnectedMainPageContainer = connect(mapStateToProps, { getAllTasks: getAllTasksThunkCreator })(withRouter(MainPageContainer))
-
-
 export default compose(
     connect(mapStateToProps, { 
         getAllTasks: getAllTasksThunkCreator,

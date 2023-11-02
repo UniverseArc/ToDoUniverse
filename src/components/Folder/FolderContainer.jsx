@@ -14,7 +14,8 @@ class FolderContainer extends React.Component {
         colorValue: "",
     }
     popupToggler = (togglerPopup) => {
-        this.setState(prevState => { // TO-DO перерефакторить.
+        // TO-DO перерефакторить.
+        this.setState(prevState => { 
             if (prevState.togglerPopup !== togglerPopup) {
                 return {
                     ...prevState,

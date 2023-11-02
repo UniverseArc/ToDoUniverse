@@ -98,7 +98,7 @@ export const deleteFolderThunkCreator = (id) => {
     }
 }
 
-export const putFolderNameThunkCreator = (id, newName, color) => { // Откуда берем folder?
+export const putFolderNameThunkCreator = (id, newName, color) => {
     return (dispatch) => {
         folderAPI.changeFolderTitleById(id, newName, color).then(data => (
             dispatch(putFolderNameAC(data, id))

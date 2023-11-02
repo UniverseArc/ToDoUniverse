@@ -5,7 +5,7 @@ export const taskAPI = {
         return instance.get(`folders/${folderId}`).then(response => response.data).catch(() => [])
     },
     changeTaskValueInFolder: (id, task, newValue) => {
-        return instance.put(`tasks/${id}`, {...task, value: newValue}).then(response => response.data) // Доделать как в changeTaskCheckedStateInFolder
+        return instance.put(`tasks/${id}`, {...task, value: newValue}).then(response => response.data)
     },
     changeTaskCheckedStateInFolder: (id, task, newChecked) => {
         return instance.put(`tasks/${id}`, {...task, checked: newChecked}).then(response => response.data)
