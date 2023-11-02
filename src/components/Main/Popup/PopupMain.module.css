@@ -1,5 +1,5 @@
 .popupWrapper{
-    position: fixed;
+    padding-left: 15px;
 }
 
 .popupWrapperOnOpen{
@@ -12,10 +12,17 @@
 
 .popupContent{
     border-radius: 20px;
-    width: 400px;
+    display: flex;
+    flex-direction: column;
     height: 50px;
 }
+.popupContentButtons{
+    display: flex;
+    flex-direction: row;
+    margin-top: 13px;
+}
 .popupInput{
+    width: 218px;
     margin-top: 18px;
     height: 32px;
     border-radius: 4px;
@@ -24,8 +31,11 @@
     text-align: left;
     padding-left: 11px;
 }
+.popupContentInputWrapper{
+    display: flex;
+    align-items: flex-start;
+}
 .popupButtonAccept{
-    margin-top: 13px;
     width: 120px;
     height: 37px;
     background-color: #4DD599;

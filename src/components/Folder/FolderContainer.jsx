@@ -25,15 +25,16 @@ class FolderContainer extends React.Component {
     }
     handleChangeInput = (e) => {
         this.setState({...this.state, inputFolderValue: e.target.value})
-        console.log(this.state);
     }
     handleColorPick = (color) => {
         
         this.setState({...this.state, colorValue: color})
     }
     onCreateNewFolder = () => {
-        
         this.props.createFolder(this.state.inputFolderValue, this.state.colorValue)
+        this.setState({
+            inputFolderValue: ""
+         })
     }
     render() {
         return (

@@ -1,3 +1,6 @@
 button {
     outline:none;
 }
+.buttonWrapper{
+    padding-top: 5px;
+}

@@ -40,11 +40,9 @@ const ColorPicker = (props) => {
         },
     ];
     const colorPicker = (color) => {
-        console.log(color);
         props.handleColorPick(color)
     }
     const arrayOfColors = colors.map((color) => {
-        console.log(color.id);
         return <div
             key={color.id}
             style={{ backgroundColor: color.color }}

@@ -3,7 +3,7 @@
 import Popup from "./Popup/Popup"
 import classes from "./Folder.module.css"
 import FolderCard from "./FolderCard/FolderCard"
-import FolderSvg from "./FolderSvg/FolderSvg"
+import FolderSvg from "../../assets/FolderSvg"
 const Folder = (props) => {
     let arrayOfFolders = props.folders.map(folder => {
         return <FolderCard key={folder.id} {...folder} />
@@ -25,6 +25,7 @@ const Folder = (props) => {
                 onCreateNewFolder={props.onCreateNewFolder} 
                 stateOfToggle={props.stateOfToggle} 
                 popupToggler={props.popupToggler} />
+                
             </div>
         </ul>
     )

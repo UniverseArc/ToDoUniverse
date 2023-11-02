@@ -22,28 +22,34 @@ const folderReducer = (state = initialState, action) => {
             return copyOfState
         }
         case DELETE_FOLDER: {
+            
             const copyOfState = {...state, folders: state.folders.filter(folder => {
-                folder.id !== action.payload
+                //TO-DO: Постоянно сталкивался с хуйней по типу 9 числовое не равно "9" в строке, которую присылал сервак. Такое фиксится TS вообще? Можно и VanillaJS, но обычно с таким сталкиваешься мало, ибо есть TS?
+                if(folder.id != action.payload){
+                    return folder
+                }
             })}
             return copyOfState
         }
+        //TO-DO: Спросить, можно ли это как-то сделать через find (оптимизация типа), стоит ли вообще делать через find мб map не так много и забирает?
         case CHANGE_FOLDER_NAME: {
-            const copyOfState = {...state, folders: [...state.folders, state.folders.find(folder => {
-                if(folder.id === action.id){
+            const copyOfState = {...state, folders: state.folders.map(folder => {
+                if(folder.id == action.id){
                     return action.folder
                 }
-            })]}
+                return folder
+            })}
             return copyOfState
         }
         //TO-DO: Отрефактроить в один CASE CHANGE_FOLDER_NAME/COLOR - когда будет работать.
-        case CHANGE_FOLDER_COLOR: {
-            const copyOfState = {...state, folders: [...state.folders, state.folders.find(folder => {
-                if(folder.id === action.id){
-                    return action.folder
-                }
-            })]}
-            return copyOfState
-        }
+        // case CHANGE_FOLDER_COLOR: {
+        //     const copyOfState = {...state, folders: [...state.folders, state.folders.find(folder => {
+        //         if(folder.id === action.id){
+        //             return action.folder
+        //         }
+        //     })]}
+        //     return copyOfState
+        // }
 
         default:{
             return state
@@ -81,17 +87,21 @@ export const postFolderThunkCreator = (name, color) => {
 
 export const deleteFolderThunkCreator = (id) => {
     return (dispatch) => {
-        folderAPI.deleteFolderById(id)
-        .then((// Доделать, непонятно что в респонсе приходит, и как одобрить операцию на отфильтровку массива    
-            dispatch((deleteFolderAC(id)))
-        ))
+        folderAPI.deleteFolderById(id).then(data =>{
+            if(data === 200){
+                dispatch((deleteFolderAC(id)))
+            }
+            else if (data !== 200){
+                alert("Удалить не удалось.")
+            }
+        })
     }
 }
 
-export const putFolderNameThunkCreator = (id, folder, newName) => { // Откуда берем folder?
+export const putFolderNameThunkCreator = (id, newName, color) => { // Откуда берем folder?
     return (dispatch) => {
-        folderAPI.changeFolderTitleById(id, folder, newName).then(data => (
-            dispatch(putFolderNameAC(data))
+        folderAPI.changeFolderTitleById(id, newName, color).then(data => (
+            dispatch(putFolderNameAC(data, id))
         ))
     }
 }

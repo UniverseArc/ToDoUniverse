@@ -10,14 +10,14 @@ const PopupMain = (props) => {
         <form className={clsx(classes.popupWrapper, props.stateOfToggle === true ? classes.popupWrapperOnOpen : classes.popupWrapperOnClose)}
         onSubmit={handleSubmit}>
             <div className={classes.popupContent}>
-                <div>
+                <div className={classes.popupContentInputWrapper}>
                     <input
                         value={props.handleDTOInputValue}
                         onChange={props.handleChangeInput}
                         className={classes.popupInput}
                         placeholder="Название задачи" />
                 </div>
-                <div>
+                <div className={classes.popupContentButtons}>
                     <button type="submit" className={classes.popupButtonAccept}>Добавить</button>
                     <button type="button" onClick={props.popupToggler} className={classes.popupButtonReject}>Отмена</button>
                 </div>

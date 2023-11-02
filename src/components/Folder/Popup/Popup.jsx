@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import ColorPicker from "./ColorPicker/ColorPicker";
 import classes from "./Popup.module.css"
-import PopupCloseSvg from "./PopupCloseSvg/PopupCloseSvg";
+import PopupCloseSvg from "../../../assets/PopupCloseSvg";
 const Popup = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();

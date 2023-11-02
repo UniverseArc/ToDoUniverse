@@ -2,9 +2,10 @@
 import React from "react";
 import MainPage from "./MainPage";
 import { connect } from "react-redux";
-import { addTaskThunkCreator, getAllTasksThunkCreator, putCheckedOnTaskThunkCreator } from "../../store/tasks/tasksReducer";
+import { addTaskThunkCreator, deleteAllTasksAC, deleteTaskThunkCreator, getAllTasksThunkCreator, putCheckedOnTaskThunkCreator, putNameOfTaskThunkCreator } from "../../store/tasks/tasksReducer";
 import withRouter from "../Utils/HOC/withRouter";
 import { compose } from "redux";
+import { deleteFolderThunkCreator, putFolderNameThunkCreator } from "../../store/folder/folderReducer";
 
 class MainPageContainer extends React.Component {
     componentDidMount() {
@@ -18,6 +19,7 @@ class MainPageContainer extends React.Component {
     state = {
         inputTaskValue: "",
         togglerPopup: false,
+        valueOfTask: "",
     }
     popupToggler = (togglerPopup) => {
         this.setState(prevState => { // TO-DO перерефакторить.
@@ -34,17 +36,41 @@ class MainPageContainer extends React.Component {
     }
     addTaskCallBack = () => { // TO-DO Переименовать в handle
         this.props.addTask(this.props.router.params.folderId, this.state.inputTaskValue, false)
+        this.setState({
+           inputTaskValue: ""
+        })
+    }
+    handleChangeValueOfTask = (id, task, newValue) => {
+        this.props.changeValueOfTask(id, task, newValue)
     }
     handleChangeCheckOfTask = (id, task, newChecked) => {
         this.props.changeCheckOfTask(id, task, newChecked)
     }
+    handleChangeNameOfFolder = (id, newName, color) => {
+        
+        this.props.changeNameOfFolder(id, newName, color)
+    }
+    deleteTaskCallBack = (id) => {
+        this.props.deleteTask(id)
+    }
+    deleteFolderCallBack = () => {
+        
+        this.props.deleteFolder(this.props.router.params.folderId)
+        this.props.deleteAll()
+    }
     render() {
         return (
             <MainPage 
-            addTaskCallBack={this.addTaskCallBack}
-            popupToggler={this.popupToggler}
             currentFolder={this.props.currentFolder} 
+            nameOfTitle={this.props.nameOfTitle}
+            colorOfTitle={this.props.colorOfTitle}
+            addTaskCallBack={this.addTaskCallBack}
+            deleteTaskCallBack={this.deleteTaskCallBack}
+            deleteFolderCallBack={this.deleteFolderCallBack}
+            popupToggler={this.popupToggler}
+            handleChangeValueOfTask={this.handleChangeValueOfTask}
             handleChangeCheckOfTask={this.handleChangeCheckOfTask}
+            handleChangeNameOfFolder={this.handleChangeNameOfFolder}
             handleChangeInput={this.handleChangeInput} 
             handleDTOInputValue={this.state.inputTaskValue} 
             stateOfToggle={this.state.togglerPopup} />
@@ -56,6 +82,8 @@ const mapStateToProps = (state) => {
     
     return {
         currentFolder: state.task.currentFolder,
+        nameOfTitle: state.task.nameOfTitle,
+        colorOfTitle: state.task.colorOfTitle,
     }
 }
 
@@ -64,8 +92,14 @@ const mapStateToProps = (state) => {
 
 export default compose(
     connect(mapStateToProps, { 
-        getAllTasks: getAllTasksThunkCreator, 
+        getAllTasks: getAllTasksThunkCreator,
+        deleteTask: deleteTaskThunkCreator, 
         addTask: addTaskThunkCreator,
-        changeCheckOfTask: putCheckedOnTaskThunkCreator }),
+        changeCheckOfTask: putCheckedOnTaskThunkCreator,
+        changeValueOfTask: putNameOfTaskThunkCreator,
+        changeNameOfFolder: putFolderNameThunkCreator,
+        deleteFolder: deleteFolderThunkCreator,
+        deleteAll: deleteAllTasksAC,
+     }),
     withRouter,
 )(MainPageContainer)
