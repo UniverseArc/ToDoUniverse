@@ -1,11 +1,11 @@
 import { taskAPI } from "../../api/task"
 
-const GET_TASKS = "GET_TASKS"
-const ADD_TASK = "ADD_TASK"
-const DELETE_TASK = "DELETE_TASK"
-const DELETE_ALL = "DELETE_ALL"
-const CHANGE_NAME_OF_TASK = "CHANGE_NAME_OF_TASK"
-const CHANGE_CHECKED_ON_TASK = "CHANGE_CHECKED_ON_TASK"
+const GET_TASKS = "TASKS/GET_TASKS"
+const ADD_TASK = "TASKS/ADD_TASK"
+const DELETE_TASK = "TASKS/DELETE_TASK"
+const DELETE_ALL = "TASKS/DELETE_ALL"
+const CHANGE_NAME_OF_TASK = "TASKS/CHANGE_NAME_OF_TASK"
+const CHANGE_CHECKED_ON_TASK = "TASKS/CHANGE_CHECKED_ON_TASK"
 
 const initialState = {
     currentFolder: [],
@@ -80,16 +80,20 @@ const putCheckedOnTaskAC = (task) => ({type: CHANGE_CHECKED_ON_TASK, payload: ta
 
 export const getAllTasksThunkCreator = (folderId) => {
     return (dispatch) => {
-        taskAPI.getTasksByFolderId(folderId).then(data => {
+        taskAPI.getTasksByFolderId(folderId)
+        .then(response => response.data)
+        .then(data => {
             dispatch(getAllTasksAC(data, folderId))
-        })
+        }).catch(() => [])
     }
 }
 
 export const addTaskThunkCreator = (folderId, value, checked) => {
     
     return (dispatch) => {
-        taskAPI.createTaskInFolder({folderId, value, checked}).then(data => {
+        taskAPI.createTaskInFolder({folderId, value, checked})
+        .then(response => response.data)
+        .then(data => {
             dispatch(addTaskAC(data))
         })
     }
@@ -99,7 +103,9 @@ export const deleteTaskThunkCreator = (id) => {
     
     return (dispatch) => {
         
-        taskAPI.deleteTaskInFolder(id).then(data => {
+        taskAPI.deleteTaskInFolder(id)
+        .then(response => response.status)
+        .then(data => {
             if(data === 200){
                 dispatch(deleteTaskAC(id))
             }
@@ -112,7 +118,9 @@ export const deleteTaskThunkCreator = (id) => {
 
 export const putNameOfTaskThunkCreator = (id, task, newValue) => {
     return (dispatch) => {
-        taskAPI.changeTaskValueInFolder(id, task, newValue).then(data => {
+        taskAPI.changeTaskValueInFolder(id, task, newValue)
+        .then(response => response.data)
+        .then(data => {
             dispatch(putTaskNameAC(data))
         })
     }
@@ -121,7 +129,9 @@ export const putNameOfTaskThunkCreator = (id, task, newValue) => {
 export const putCheckedOnTaskThunkCreator = (id, task, newChecked) => {
     
     return (dispatch) => {
-        taskAPI.changeTaskCheckedStateInFolder(id, task, newChecked).then(data => {
+        taskAPI.changeTaskCheckedStateInFolder(id, task, newChecked)
+        .then(response => response.data)
+        .then(data => {
             dispatch(putCheckedOnTaskAC(data))
         })
     }

@@ -1,10 +1,10 @@
 import { folderAPI } from "../../api/folder"
 
-const GET_ALL_FOLDERS = "GET_ALL_FOLDERS"
-const ADD_FOLDER = "ADD_FOLDER"
-const DELETE_FOLDER = "DELETE_FOLDER"
-const CHANGE_FOLDER_NAME = "CHANGE_FOLDER_NAME"
-const CHANGE_FOLDER_COLOR = "CHANGE_FOLDER_COLOR"
+const GET_ALL_FOLDERS = "FOLDERS/GET_ALL_FOLDERS"
+const ADD_FOLDER = "FOLDERS/ADD_FOLDER"
+const DELETE_FOLDER = "FOLDERS/DELETE_FOLDER"
+const CHANGE_FOLDER_NAME = "FOLDERS/CHANGE_FOLDER_NAME"
+const CHANGE_FOLDER_COLOR = "FOLDERS/CHANGE_FOLDER_COLOR"
 
 const initialState = {
     folders: []
@@ -71,7 +71,9 @@ const putFolderColorAC = (folder, id) => ({type: CHANGE_FOLDER_COLOR, payload: {
 
 export const getAllFoldersThunkCreator = () => {
     return (dispatch) => {
-        folderAPI.getAllFolders().then(data => (
+        folderAPI.getAllFolders()
+        .then(response => response.data)
+        .then(data => (
             dispatch(getAllFoldersAC(data))
         ))
     }
@@ -79,7 +81,9 @@ export const getAllFoldersThunkCreator = () => {
 
 export const postFolderThunkCreator = (name, color) => {
     return (dispatch) => {
-        folderAPI.createFolder(name, color).then(data => (
+        folderAPI.createFolder(name, color)
+        .then(response => response.data)
+        .then(data => (
             dispatch(postFolderAC(data))
         ))
     }
@@ -87,7 +91,9 @@ export const postFolderThunkCreator = (name, color) => {
 
 export const deleteFolderThunkCreator = (id) => {
     return (dispatch) => {
-        folderAPI.deleteFolderById(id).then(data =>{
+        folderAPI.deleteFolderById(id)
+        .then(response => response.status)
+        .then(data =>{
             if(data === 200){
                 dispatch((deleteFolderAC(id)))
             }
@@ -100,7 +106,9 @@ export const deleteFolderThunkCreator = (id) => {
 
 export const putFolderNameThunkCreator = (id, newName, color) => {
     return (dispatch) => {
-        folderAPI.changeFolderTitleById(id, newName, color).then(data => (
+        folderAPI.changeFolderTitleById(id, newName, color)
+        .then(response => response.data)
+        .then(data => (
             dispatch(putFolderNameAC(data, id))
         ))
     }
