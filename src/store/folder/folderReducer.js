@@ -34,8 +34,8 @@ const folderReducer = (state = initialState, action) => {
         //TO-DO: Спросить, можно ли это как-то сделать через find (оптимизация типа), стоит ли вообще делать через find мб map не так много и забирает?
         case CHANGE_FOLDER_NAME: {
             const copyOfState = {...state, folders: state.folders.map(folder => {
-                if(folder.id == action.id){
-                    return action.folder
+                if(folder.id == action.payload.id){
+                    return action.payload.folder
                 }
                 return folder
             })}
@@ -44,8 +44,8 @@ const folderReducer = (state = initialState, action) => {
         //TO-DO: Отрефактроить в один CASE CHANGE_FOLDER_NAME/COLOR - когда будет работать.
         // case CHANGE_FOLDER_COLOR: {
         //     const copyOfState = {...state, folders: [...state.folders, state.folders.find(folder => {
-        //         if(folder.id === action.id){
-        //             return action.folder
+        //         if(folder.id === action.payload.id){
+        //             return action.payload.folder
         //         }
         //     })]}
         //     return copyOfState
@@ -65,9 +65,9 @@ const postFolderAC = (folder) => ({type: ADD_FOLDER, payload: folder})
 
 const deleteFolderAC = (id) => ({type: DELETE_FOLDER, payload: id})
 
-const putFolderNameAC = (folder, id) => ({type: CHANGE_FOLDER_NAME, folder, id})
+const putFolderNameAC = (folder, id) => ({type: CHANGE_FOLDER_NAME, payload: {folder, id}})
 
-const putFolderColorAC = (folder, id) => ({type: CHANGE_FOLDER_COLOR, folder, id})
+const putFolderColorAC = (folder, id) => ({type: CHANGE_FOLDER_COLOR, payload: {folder, id}})
 
 export const getAllFoldersThunkCreator = () => {
     return (dispatch) => {

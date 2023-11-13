@@ -19,9 +19,9 @@ const tasksReducer = (state = initialState, action) => {
         case GET_TASKS: {
             
             const copyOfState = {...state, 
-                nameOfTitle: action.data.name, 
-                colorOfTitle:action.data.color, 
-                currentFolder: [...action.data.tasks.map(task => ({...task, folderId: action.folderId}))]} // TO-DO: Доделать
+                nameOfTitle: action.payload.data.name, 
+                colorOfTitle:action.payload.data.color, 
+                currentFolder: [...action.payload.data.tasks.map(task => ({...task, folderId: action.payload.folderId}))]}
             return copyOfState
         }
         case ADD_TASK: {
@@ -44,8 +44,8 @@ const tasksReducer = (state = initialState, action) => {
         case CHANGE_NAME_OF_TASK: {
             const copyOfState = {...state, currentFolder: state.currentFolder.map(task => {
                 
-                if(task.id === action.task.id){
-                    return action.task
+                if(task.id === action.payload.task.id){
+                    return action.payload.task
                 }
                 return task
             })}
@@ -53,8 +53,8 @@ const tasksReducer = (state = initialState, action) => {
         }
         case CHANGE_CHECKED_ON_TASK: {
             const copyOfState = {...state, currentFolder: state.currentFolder.map(task => {
-                if(task.id === action.task.id){
-                    return action.task
+                if(task.id === action.payload.id){
+                    return action.payload
                 }
                 return task
             })}
@@ -66,7 +66,7 @@ const tasksReducer = (state = initialState, action) => {
     }
 }
 
-const getAllTasksAC = (tasks, folderId) => ({type: GET_TASKS, data: tasks, folderId: folderId})
+const getAllTasksAC = (tasks, folderId) => ({type: GET_TASKS, payload: {data: tasks, folderId}})
 
 const addTaskAC = (task) => ({type: ADD_TASK, payload: task})
 
@@ -74,9 +74,9 @@ const deleteTaskAC = (id) => ({type: DELETE_TASK, payload: id})
 
 export const deleteAllTasksAC = () => ({type: DELETE_ALL})
 
-const putTaskNameAC = (task) => ({type: CHANGE_NAME_OF_TASK, task, id})
+const putTaskNameAC = (task) => ({type: CHANGE_NAME_OF_TASK, payload: task})
 
-const putCheckedOnTaskAC = (task) => ({type: CHANGE_CHECKED_ON_TASK, task})
+const putCheckedOnTaskAC = (task) => ({type: CHANGE_CHECKED_ON_TASK, payload: task})
 
 export const getAllTasksThunkCreator = (folderId) => {
     return (dispatch) => {
