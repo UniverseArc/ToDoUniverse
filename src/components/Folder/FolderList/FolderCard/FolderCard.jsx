@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import classes from "./FolderCard.module.css"
-import { getAllTasksThunkCreator } from "../../../store/tasks/tasksReducer";
+import { getAllTasksThunkCreator } from "../../../../store/tasks/tasksReducer";
 const FolderCard = (folder) => {
     const changeMainPage = () => {
         getAllTasksThunkCreator(`${folder.id}`)

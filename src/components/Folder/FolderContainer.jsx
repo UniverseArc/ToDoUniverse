@@ -2,12 +2,9 @@
 import React from "react";
 import Folder from "./Folder";
 import { connect } from "react-redux";
-import { postFolderThunkCreator, setFoldersThunkCreator } from "../../store/folder/folderReducer";
+import { postFolderThunkCreator } from "../../store/folder/folderReducer";
 
 class FolderContainer extends React.Component {
-    componentDidMount() {
-        this.props.getFolders()
-    }
     state = {
         togglerPopup: false,
         inputFolderValue: "",
@@ -59,6 +56,6 @@ let mapStateToProps = (state) => {
     }
 }
 
-const ConnectedFolderContainer = connect(mapStateToProps, { getFolders: setFoldersThunkCreator, createFolder: postFolderThunkCreator})(FolderContainer)
+const ConnectedFolderContainer = connect(mapStateToProps, { createFolder: postFolderThunkCreator})(FolderContainer)
 
 export default ConnectedFolderContainer;

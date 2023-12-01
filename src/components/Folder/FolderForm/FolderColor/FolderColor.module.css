@@ -1,0 +1,22 @@
+.wrapper{
+    --gap: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: calc(-1 * var(--gap));
+    list-style: none;
+}
+
+.colorItem {
+    --size: 16px;
+    margin: var(--gap);
+    background: var(--background);
+    border-radius: 50%;
+    width: var(--size);
+    height: var(--size);
+    border: 1px transparent solid;
+}
+
+.colorItem:hover,
+.colorItem.active {
+    border-color: black;
+}
