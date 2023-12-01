@@ -1,5 +1,5 @@
 import { taskAPI } from "../../api/task"
-import { addTaskDTO, putCheckedTaskDTO, putNameTaskDTO } from "./TasksDTO"
+import { addTaskDTO, putCheckedTaskDTO, putNameTaskDTO, setTasksWithFolderIdDTO } from "./TasksDTO"
 
 const GET_TASKS = "TASKS/GET_TASKS"
 const ADD_TASK = "TASKS/ADD_TASK"
@@ -18,10 +18,9 @@ const tasksReducer = (state = initialState, action) => {
     switch(action.type){
         
         case GET_TASKS: {
-            
             const copyOfState = {...state, 
                 nameOfTitle: action.payload.data.name, 
-                colorOfTitle:action.payload.data.color, 
+                colorOfTitle: action.payload.data.color, 
                 currentFolder: action.payload.data.tasks.map(task => ({...task, folderId: action.payload.folderId}))}
             return copyOfState
         }
@@ -65,7 +64,7 @@ const tasksReducer = (state = initialState, action) => {
     }
 }
 
-const getAllTasksAC = (tasks, folderId) => ({type: GET_TASKS, payload: {data: tasks, folderId}})
+const getAllTasksAC = (tasks) => ({type: GET_TASKS, payload: tasks})
 
 const addTaskAC = (task) => ({type: ADD_TASK, payload: task})
 
@@ -82,7 +81,7 @@ export const getAllTasksThunkCreator = (folderId) => {
         taskAPI.getTasksByFolderId(folderId)
         .then(response => response.data)
         .then(data => {
-            dispatch(getAllTasksAC(data, folderId))
+            dispatch(getAllTasksAC(setTasksWithFolderIdDTO({data, folderId})))
         }).catch(() => [])
     }
 }

@@ -1,3 +1,10 @@
+export function setTasksWithFolderIdDTO(tasks){
+    return {
+        data: tasks.data,
+        folderId: Number(tasks.folderId),
+    }
+}
+
 export function addTaskDTO(task){
     return {
         folderId: Number(task.folderId),

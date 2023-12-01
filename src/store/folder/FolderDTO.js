@@ -3,15 +3,6 @@ export function FolderDTO(folder){
         id: Number(folder.id),
         name: folder.name,
         color: folder.color,
-        tasks: folder.tasks.map(TaskDTO)
-    }
-}
-
-export function TaskDTO(task){
-    return {
-        id: Number(task.id),
-        value: task.value,
-        checked: task.checked,
     }
 }
 

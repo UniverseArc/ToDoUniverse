@@ -8,7 +8,6 @@ export const taskAPI = {
         return instance.put(`tasks/${task.id}`, {...task, id: delete task.id})
     },
     changeTaskCheckedStateInFolder: (task) => {
-        debugger
         return instance.put(`tasks/${task.id}`, {...task, id: delete task.id})
     },
     deleteTaskInFolder: (id) => {
