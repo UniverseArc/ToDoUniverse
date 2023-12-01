@@ -1,10 +1,11 @@
 import { folderAPI } from "../../api/folder"
+import { FolderDTO, postFolderDTO, putFolderNameDTO } from "./FolderDTO"
 
-const GET_ALL_FOLDERS = "FOLDERS/GET_ALL_FOLDERS"
+const SET_FOLDERS = "FOLDERS/SET_FOLDERS"
 const ADD_FOLDER = "FOLDERS/ADD_FOLDER"
 const DELETE_FOLDER = "FOLDERS/DELETE_FOLDER"
 const CHANGE_FOLDER_NAME = "FOLDERS/CHANGE_FOLDER_NAME"
-const CHANGE_FOLDER_COLOR = "FOLDERS/CHANGE_FOLDER_COLOR"
+// const CHANGE_FOLDER_COLOR = "FOLDERS/CHANGE_FOLDER_COLOR"
 
 const initialState = {
     folders: []
@@ -13,7 +14,7 @@ const initialState = {
 
 const folderReducer = (state = initialState, action) => {
     switch(action.type){
-        case GET_ALL_FOLDERS: {
+        case SET_FOLDERS: {
             const copyOfState = {...state, folders: action.payload}
             return copyOfState
         }
@@ -41,6 +42,7 @@ const folderReducer = (state = initialState, action) => {
             })}
             return copyOfState
         }
+
         //TO-DO: Отрефактроить в один CASE CHANGE_FOLDER_NAME/COLOR - когда будет работать.
         // case CHANGE_FOLDER_COLOR: {
         //     const copyOfState = {...state, folders: [...state.folders, state.folders.find(folder => {
@@ -59,7 +61,7 @@ const folderReducer = (state = initialState, action) => {
 }
 
 
-const getAllFoldersAC = (folders) => ({type: GET_ALL_FOLDERS, payload: folders})
+const setFoldersAC = (folders) => ({type: SET_FOLDERS, payload: folders})
 
 const postFolderAC = (folder) => ({type: ADD_FOLDER, payload: folder})
 
@@ -67,23 +69,25 @@ const deleteFolderAC = (id) => ({type: DELETE_FOLDER, payload: id})
 
 const putFolderNameAC = (folder, id) => ({type: CHANGE_FOLDER_NAME, payload: {folder, id}})
 
-const putFolderColorAC = (folder, id) => ({type: CHANGE_FOLDER_COLOR, payload: {folder, id}})
+// const putFolderColorAC = (folder, id) => ({type: CHANGE_FOLDER_COLOR, payload: {folder, id}})
 
-export const getAllFoldersThunkCreator = () => {
+
+export const setFoldersThunkCreator = () => {
     return (dispatch) => {
         folderAPI.getAllFolders()
-        .then(response => response.data)
+        .then(response => response.data.map(FolderDTO))
         .then(data => (
-            dispatch(getAllFoldersAC(data))
+            dispatch(setFoldersAC(data))
         ))
     }
 }
 
 export const postFolderThunkCreator = (name, color) => {
     return (dispatch) => {
-        folderAPI.createFolder(name, color)
+        folderAPI.createFolder(postFolderDTO({ name, color }))
         .then(response => response.data)
         .then(data => (
+            console.log(data),
             dispatch(postFolderAC(data))
         ))
     }
@@ -106,7 +110,7 @@ export const deleteFolderThunkCreator = (id) => {
 
 export const putFolderNameThunkCreator = (id, newName, color) => {
     return (dispatch) => {
-        folderAPI.changeFolderTitleById(id, newName, color)
+        folderAPI.changeFolderTitleById(putFolderNameDTO({id, newName, color}))
         .then(response => response.data)
         .then(data => (
             dispatch(putFolderNameAC(data, id))
@@ -114,12 +118,12 @@ export const putFolderNameThunkCreator = (id, newName, color) => {
     }
 }
 
-export const putFolderColorThunkCreator = (id, folder, newColor) => {
-    return (dispatch) => {
-        folderAPI.changeFolderColorById(id, folder, newColor).then(data => (
-            dispatch(putFolderColorAC(data))
-        ))
-    }
-}
+// export const putFolderColorThunkCreator = (id, folder, newColor) => {
+//     return (dispatch) => {
+//         folderAPI.changeFolderColorById(putFolderColorDTO({id, folder, newColor})).then(data => (
+//             dispatch(putFolderColorAC(data))
+//         ))
+//     }
+// }
 
 export default folderReducer;

@@ -47,7 +47,6 @@ class MainPageContainer extends React.Component {
         this.props.changeCheckOfTask(id, task, newChecked)
     }
     handleChangeNameOfFolder = (id, newName, color) => {
-        
         this.props.changeNameOfFolder(id, newName, color)
     }
     deleteTaskCallBack = (id) => {

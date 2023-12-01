@@ -2,7 +2,7 @@
 import React from "react";
 import Folder from "./Folder";
 import { connect } from "react-redux";
-import { getAllFoldersThunkCreator, postFolderThunkCreator } from "../../store/folder/folderReducer";
+import { postFolderThunkCreator, setFoldersThunkCreator } from "../../store/folder/folderReducer";
 
 class FolderContainer extends React.Component {
     componentDidMount() {
@@ -59,6 +59,6 @@ let mapStateToProps = (state) => {
     }
 }
 
-const ConnectedFolderContainer = connect(mapStateToProps, { getFolders: getAllFoldersThunkCreator, createFolder: postFolderThunkCreator})(FolderContainer)
+const ConnectedFolderContainer = connect(mapStateToProps, { getFolders: setFoldersThunkCreator, createFolder: postFolderThunkCreator})(FolderContainer)
 
 export default ConnectedFolderContainer;

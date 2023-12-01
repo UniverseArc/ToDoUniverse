@@ -1,4 +1,5 @@
 import { taskAPI } from "../../api/task"
+import { addTaskDTO, putCheckedTaskDTO, putNameTaskDTO } from "./TasksDTO"
 
 const GET_TASKS = "TASKS/GET_TASKS"
 const ADD_TASK = "TASKS/ADD_TASK"
@@ -21,7 +22,7 @@ const tasksReducer = (state = initialState, action) => {
             const copyOfState = {...state, 
                 nameOfTitle: action.payload.data.name, 
                 colorOfTitle:action.payload.data.color, 
-                currentFolder: [...action.payload.data.tasks.map(task => ({...task, folderId: action.payload.folderId}))]}
+                currentFolder: action.payload.data.tasks.map(task => ({...task, folderId: action.payload.folderId}))}
             return copyOfState
         }
         case ADD_TASK: {
@@ -36,16 +37,14 @@ const tasksReducer = (state = initialState, action) => {
             })}
             return copyOfState
         }
-        //TO-DO: Насколько плохо так делать?
         case DELETE_ALL: {
             const copyOfState = {...state, currentFolder: [], nameOfTitle: "", colorOfTitle: ""}
             return copyOfState
         }
         case CHANGE_NAME_OF_TASK: {
             const copyOfState = {...state, currentFolder: state.currentFolder.map(task => {
-                
-                if(task.id === action.payload.task.id){
-                    return action.payload.task
+                if(task.id === action.payload.id){
+                    return action.payload
                 }
                 return task
             })}
@@ -91,7 +90,7 @@ export const getAllTasksThunkCreator = (folderId) => {
 export const addTaskThunkCreator = (folderId, value, checked) => {
     
     return (dispatch) => {
-        taskAPI.createTaskInFolder({folderId, value, checked})
+        taskAPI.createTaskInFolder(addTaskDTO({folderId, value, checked}))
         .then(response => response.data)
         .then(data => {
             dispatch(addTaskAC(data))
@@ -118,7 +117,7 @@ export const deleteTaskThunkCreator = (id) => {
 
 export const putNameOfTaskThunkCreator = (id, task, newValue) => {
     return (dispatch) => {
-        taskAPI.changeTaskValueInFolder(id, task, newValue)
+        taskAPI.changeTaskValueInFolder(putNameTaskDTO({id, task, newValue}))
         .then(response => response.data)
         .then(data => {
             dispatch(putTaskNameAC(data))
@@ -129,7 +128,7 @@ export const putNameOfTaskThunkCreator = (id, task, newValue) => {
 export const putCheckedOnTaskThunkCreator = (id, task, newChecked) => {
     
     return (dispatch) => {
-        taskAPI.changeTaskCheckedStateInFolder(id, task, newChecked)
+        taskAPI.changeTaskCheckedStateInFolder(putCheckedTaskDTO({id, task, newChecked}))
         .then(response => response.data)
         .then(data => {
             dispatch(putCheckedOnTaskAC(data))
