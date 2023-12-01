@@ -27,6 +27,7 @@ class TestOnDoubleClickChange extends React.Component {
             <div>
                 {this.state.editMode === false &&
                     <span onDoubleClick={this.activeEditMode}>{this.state.value}
+                    <button onClick={this.activeEditMode}>11</button>
                     </span>
                 }
                 {this.state.editMode === true &&

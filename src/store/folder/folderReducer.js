@@ -1,10 +1,11 @@
 import { folderAPI } from "../../api/folder"
+import { FolderDTO, postFolderDTO, putFolderNameDTO } from "./FolderDTO"
 
-const GET_ALL_FOLDERS = "GET_ALL_FOLDERS"
-const ADD_FOLDER = "ADD_FOLDER"
-const DELETE_FOLDER = "DELETE_FOLDER"
-const CHANGE_FOLDER_NAME = "CHANGE_FOLDER_NAME"
-const CHANGE_FOLDER_COLOR = "CHANGE_FOLDER_COLOR"
+const SET_FOLDERS = "FOLDERS/SET_FOLDERS"
+const ADD_FOLDER = "FOLDERS/ADD_FOLDER"
+const DELETE_FOLDER = "FOLDERS/DELETE_FOLDER"
+const CHANGE_FOLDER_NAME = "FOLDERS/CHANGE_FOLDER_NAME"
+// const CHANGE_FOLDER_COLOR = "FOLDERS/CHANGE_FOLDER_COLOR"
 
 const initialState = {
     folders: []
@@ -13,7 +14,7 @@ const initialState = {
 
 const folderReducer = (state = initialState, action) => {
     switch(action.type){
-        case GET_ALL_FOLDERS: {
+        case SET_FOLDERS: {
             const copyOfState = {...state, folders: action.payload}
             return copyOfState
         }
@@ -34,18 +35,19 @@ const folderReducer = (state = initialState, action) => {
         //TO-DO: Спросить, можно ли это как-то сделать через find (оптимизация типа), стоит ли вообще делать через find мб map не так много и забирает?
         case CHANGE_FOLDER_NAME: {
             const copyOfState = {...state, folders: state.folders.map(folder => {
-                if(folder.id == action.id){
-                    return action.folder
+                if(folder.id == action.payload.id){
+                    return action.payload.folder
                 }
                 return folder
             })}
             return copyOfState
         }
+
         //TO-DO: Отрефактроить в один CASE CHANGE_FOLDER_NAME/COLOR - когда будет работать.
         // case CHANGE_FOLDER_COLOR: {
         //     const copyOfState = {...state, folders: [...state.folders, state.folders.find(folder => {
-        //         if(folder.id === action.id){
-        //             return action.folder
+        //         if(folder.id === action.payload.id){
+        //             return action.payload.folder
         //         }
         //     })]}
         //     return copyOfState
@@ -59,27 +61,33 @@ const folderReducer = (state = initialState, action) => {
 }
 
 
-const getAllFoldersAC = (folders) => ({type: GET_ALL_FOLDERS, payload: folders})
+const setFoldersAC = (folders) => ({type: SET_FOLDERS, payload: folders})
 
 const postFolderAC = (folder) => ({type: ADD_FOLDER, payload: folder})
 
 const deleteFolderAC = (id) => ({type: DELETE_FOLDER, payload: id})
 
-const putFolderNameAC = (folder, id) => ({type: CHANGE_FOLDER_NAME, folder, id})
+const putFolderNameAC = (folder, id) => ({type: CHANGE_FOLDER_NAME, payload: {folder, id}})
 
-const putFolderColorAC = (folder, id) => ({type: CHANGE_FOLDER_COLOR, folder, id})
+// const putFolderColorAC = (folder, id) => ({type: CHANGE_FOLDER_COLOR, payload: {folder, id}})
 
-export const getAllFoldersThunkCreator = () => {
+
+export const setFoldersThunkCreator = () => {
     return (dispatch) => {
-        folderAPI.getAllFolders().then(data => (
-            dispatch(getAllFoldersAC(data))
+        folderAPI.getAllFolders()
+        .then(response => response.data.map(FolderDTO))
+        .then(data => (
+            dispatch(setFoldersAC(data))
         ))
     }
 }
 
 export const postFolderThunkCreator = (name, color) => {
     return (dispatch) => {
-        folderAPI.createFolder(name, color).then(data => (
+        folderAPI.createFolder(postFolderDTO({ name, color }))
+        .then(response => response.data)
+        .then(data => (
+            console.log(data),
             dispatch(postFolderAC(data))
         ))
     }
@@ -87,7 +95,9 @@ export const postFolderThunkCreator = (name, color) => {
 
 export const deleteFolderThunkCreator = (id) => {
     return (dispatch) => {
-        folderAPI.deleteFolderById(id).then(data =>{
+        folderAPI.deleteFolderById(id)
+        .then(response => response.status)
+        .then(data =>{
             if(data === 200){
                 dispatch((deleteFolderAC(id)))
             }
@@ -100,18 +110,20 @@ export const deleteFolderThunkCreator = (id) => {
 
 export const putFolderNameThunkCreator = (id, newName, color) => {
     return (dispatch) => {
-        folderAPI.changeFolderTitleById(id, newName, color).then(data => (
+        folderAPI.changeFolderTitleById(putFolderNameDTO({id, newName, color}))
+        .then(response => response.data)
+        .then(data => (
             dispatch(putFolderNameAC(data, id))
         ))
     }
 }
 
-export const putFolderColorThunkCreator = (id, folder, newColor) => {
-    return (dispatch) => {
-        folderAPI.changeFolderColorById(id, folder, newColor).then(data => (
-            dispatch(putFolderColorAC(data))
-        ))
-    }
-}
+// export const putFolderColorThunkCreator = (id, folder, newColor) => {
+//     return (dispatch) => {
+//         folderAPI.changeFolderColorById(putFolderColorDTO({id, folder, newColor})).then(data => (
+//             dispatch(putFolderColorAC(data))
+//         ))
+//     }
+// }
 
 export default folderReducer;

@@ -2,18 +2,18 @@ import { instance } from "./api"
 
 export const taskAPI = {
     getTasksByFolderId: (folderId) => {
-        return instance.get(`folders/${folderId}`).then(response => response.data).catch(() => [])
+        return instance.get(`folders/${folderId}`)
     },
-    changeTaskValueInFolder: (id, task, newValue) => {
-        return instance.put(`tasks/${id}`, {...task, value: newValue}).then(response => response.data)
+    changeTaskValueInFolder: (task) => {
+        return instance.put(`tasks/${task.id}`, {...task, id: delete task.id})
     },
-    changeTaskCheckedStateInFolder: (id, task, newChecked) => {
-        return instance.put(`tasks/${id}`, {...task, checked: newChecked}).then(response => response.data)
+    changeTaskCheckedStateInFolder: (task) => {
+        return instance.put(`tasks/${task.id}`, {...task, id: delete task.id})
     },
     deleteTaskInFolder: (id) => {
-        return instance.delete(`tasks/${id}`).then(response => response.status)
+        return instance.delete(`tasks/${id}`)
     },
     createTaskInFolder: (task) => {
-        return instance.post(`tasks`, {...task}).then(response => response.data)
+        return instance.post(`tasks`, {...task})
     },
 }
