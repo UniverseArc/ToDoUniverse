@@ -1,26 +1,3 @@
-.popupWrapper{
-    position: fixed;
-    margin-top: 13px;
-    margin-left: 28px;
-    animation: show-hide-popup 1s forwards;
-}
-
-@keyframes show-hide-popup {
-    0%{
-        opacity: 0;
-        transform: translateX(-200px);
-    }
-    50%{
-        opacity: 1;
-    }
-}
-
-.popupContent{
-    border-radius: 20px;
-    background-color: white;
-    width: 235px;
-    height: 148px;
-}
 .popupInput{
     margin-top: 18px;
     height: 32px;
@@ -31,6 +8,7 @@
     padding-left: 11px;
 }
 .popupColorsPick{
+    list-style: none;
     display: flex;
     flex-direction: row;
     gap: 5px;
@@ -39,15 +17,15 @@
     cursor: pointer;
 }
 
-.popupColorsPick div {
+.popupColorsPick li {
     width: 15.7px;
     height: 15.7px;
     border-radius: 50px;
 }
-.popupColorsPick div:hover {
+.popupColorsPick li:hover {
     border: 1px black solid;
 }
-.popupColorsPick div:target {
+.popupColorsPick li:target {
     border: 1px black solid;
 }
 

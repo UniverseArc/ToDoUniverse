@@ -83,7 +83,9 @@ export const setFoldersThunkCreator = () => {
 }
 
 export const postFolderThunkCreator = (name, color) => {
+    
     return (dispatch) => {
+        console.log(1);
         folderAPI.createFolder(postFolderDTO({ name, color }))
         .then(response => response.data)
         .then(data => (

@@ -1,19 +1,21 @@
 /* eslint-disable react/prop-types */
 
-import Popup from "./Popup/Popup"
+// import Popup from "./Popup/Popup"
 import classes from "./Folder.module.css"
-import FolderCard from "./FolderCard/FolderCard"
-import FolderSvg from "../../assets/FolderSvg"
+import { ConnectedFolderFormContainer } from "./FolderList/FolderForm/FolderFormContainer";
+// import FolderCard from "./FolderCard/FolderCard"
+// import FolderSvg from "../../assets/FolderSvg"
+import { ConnectedFolderListContainer } from "./FolderList/FolderListContainer"
 const Folder = (props) => {
-    let arrayOfFolders = props.folders.map(folder => {
-        return <FolderCard key={folder.id} {...folder} />
-    })
     return (
         <ul className={classes.folderBorder}>
             <div className={classes.arrayBorder}>
-                {arrayOfFolders}
+                <ConnectedFolderListContainer />
             </div>
-            <div className={classes.AddFolderWrapper}>
+            <div>
+                <ConnectedFolderFormContainer />
+            </div>
+            {/* <div className={classes.AddFolderWrapper}>
                 <FolderSvg /> <button className={classes.addFolderButton} onClick={props.popupToggler}>Добавить папку</button>
                 
                 <Popup 
@@ -26,7 +28,7 @@ const Folder = (props) => {
                 stateOfToggle={props.stateOfToggle} 
                 popupToggler={props.popupToggler} />
                 
-            </div>
+            </div> */}
         </ul>
     )
 }

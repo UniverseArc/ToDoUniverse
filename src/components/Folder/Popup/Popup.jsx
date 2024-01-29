@@ -20,7 +20,7 @@ const Popup = (props) => {
                         placeholder="Название папки" />
                 </div>
                 <div>
-                    <ColorPicker handleColorPick={props.handleColorPick} />
+                    <ColorPicker handleDTOColorValue={props.handleDTOColorValue} handleColorPick={props.handleColorPick} />
                 </div>
                 <div>
                     <button type="submit" className={classes.popupButton}>Добавить</button>
