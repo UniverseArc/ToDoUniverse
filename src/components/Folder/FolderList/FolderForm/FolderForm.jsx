@@ -13,6 +13,8 @@ class FolderForm extends PureComponent {
         console.log(this);
         e.preventDefault()
         this.props.onSendFolders(this.props.name, this.props.color)
+        this.props.changeName('')
+        this.props.changeColor('')
     }
 
     render() {
