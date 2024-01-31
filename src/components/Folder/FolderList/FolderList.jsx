@@ -5,6 +5,7 @@ class FolderList extends PureComponent {
     constructor(props){
         super(props)
     }
+    
     getFolders = () => this.props.folders.map(folder => <FolderCard key={folder.id} {...folder} />)
 
     render(){

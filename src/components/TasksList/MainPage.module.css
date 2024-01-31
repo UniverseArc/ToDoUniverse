@@ -1,0 +1,36 @@
+.MainPageWrapper{
+    background-color: white;
+    color: #000;  
+    margin-top: 5px;
+}
+.taskWrapper{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #000;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+.MainPageTitle{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+}
+.MainPageTitleButton{
+    padding-top: 1.2px;
+}
+.MainPageAddTaskWrapper{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.MainPageAddNewTask{
+    background-color: transparent;
+    color: #767676;
+    border: none;
+    cursor: pointer;   
+}

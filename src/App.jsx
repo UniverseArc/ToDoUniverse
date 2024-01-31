@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import ConnectedFolderContainer from './components/Folder/FolderContainer'
-import MainPageContainer from './components/Main/MainPageContainer'
+// import MainPageContainer from './components/Main/MainPageContainer'
+import TasksListContainer from './components/TasksList/TasksListContainer'
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <div className="app-wrapper-content">
         <Routes>
                     
-          <Route path="folder/:folderId" element={<MainPageContainer />} />
+          <Route path="folder/:folderId" element={<TasksListContainer />} />
 
         </Routes>
       </div>
